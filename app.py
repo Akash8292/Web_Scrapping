@@ -1,12 +1,13 @@
 from flask import Flask, request, render_template_string
 import time
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
+import os
 
 app = Flask(__name__)
 
@@ -29,6 +30,9 @@ def extract_reviews(url):
     chrome_options.add_argument("--headless")  # Run in headless mode
     chrome_options.add_argument("--disable-gpu")  # Disable GPU acceleration (may not be necessary)
     chrome_options.add_argument("--no-sandbox")  # Bypass OS security model (useful in some environments)
+
+    # Manually specify the path to the Chrome binary (update if necessary)
+    chrome_options.binary_location = "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
 
     # Automatically manage ChromeDriver
     service = Service(ChromeDriverManager().install())
@@ -88,4 +92,3 @@ def extract_reviews(url):
 
 if __name__ == '__main__':
     app.run(debug=True)
-
